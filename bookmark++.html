@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<!-- Scripts and Css *** Gabriel Gheorghian & Natacha Gabbamonte -->
+	<head>
+		
+		<link rel="stylesheet" href="bootstrap-combined.no-icons.min.css">
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+		
+		<link rel="stylesheet" type="text/css" href="bookmark++.css"/>
+		
+		<script type="text/javascript" src="angular.min.js"></script>
+		<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="bookmark++.js"></script>
+		<script type="text/javascript" src="ui-bootstrap-tpls-0.3.0.min.js"></script>
+		
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<!-- end Scripts and Css -->
+	
+	<!-- Content -->
+	<body ng-app="MyApp">
+		<div id="all" ng-controller="BookmarkController">
+			
+			<!-- searchDiv -->
+			<div id="searchDiv">
+				<input id="search" ng-model="search" placeholder="Search"></input>
+				
+				<!-- tabs -->
+				<div id="tabsDiv">
+					<button title="Bookmarks" class="btn btn-mini tabs" ng-click="ChangeTab(0)"
+							ng-class="{true : 'active'}[SelectedTab == 0]"><i class="icon-bookmark"></i> Bookmarks</button>
+							
+					<button title="Recently Changed" class="btn btn-mini tabs" ng-click="ChangeTab(1)"
+							ng-class="{true : 'active'}[SelectedTab == 1]"><i class="icon-undo"></i> Changed</button>
+							
+					<button title="Recently Deleted" class="btn btn-mini tabs" ng-click="ChangeTab(2)"
+							ng-class="{true : 'active'}[SelectedTab == 2]"><i class="icon-trash"></i> Deleted</button>
+				</div>
+				<!-- end tabs -->
+			</div>
+			<!-- end searchDiv -->
+			
+			<!-- BOOKMARKS -->
+			<ul id="bookmarkList" ng-show="SelectedTab == 0" class="unstyled">
+			
+				<!-- No Bookmarks found -->
+				<div ng-hide="(Bookmarks | filter:search).length">
+					&emsp;No bookmarks found.
+				</div>
+				<!-- end No Bookmarks found -->
+				<hr>
+				<!-- Bookmark item -->
+				<li ng-repeat="item in Bookmarks | filter:search">
+					
+					<div class="bookmark">
+					
+						<!-- Button Area -->
+						<div class="buttonsGroup">
+							<button title="Replace bookmark with current tab." 
+									class="btn btn-success btn-mini sideButton" 
+									ng-click="openMessageBoxForReplace(item)">
+										<i class="icon-white icon-exchange" alt="Replace"></i>
+							</button>
+							
+							<button title="Delete bookmark." 
+									class="btn btn-danger btn-mini sideButton" 
+									ng-click="openMessageBoxForDelete(item, $index)">
+										<i class="icon-white icon-remove" alt="Delete"></i>
+							</button>
+						</div>
+						<!-- end Button Area -->
+					
+					
+						<!-- Text Area -->
+						<div class="textGroup">
+						
+							<!-- Title -->
+							<div class="title" ng-click="OpenBookmark(item)">
+								{{item.title}}
+							</div>
+							<!-- end Title -->
+							
+							<!-- Url -->
+							<div class="url" ng-click="OpenBookmark(item)">
+								{{item.url}}
+							</div>
+							<!-- end Url -->
+							
+						</div>
+						<!-- end Text Area -->
+						<hr>
+					</div>
+					
+				</li>
+				<!-- end Bookmark item -->
+			</ul>
+			<!-- end BOOKMARKS -->
+			
+			<!-- CHANGED -->
+			<ul id="bookmarkList" ng-show="SelectedTab == 1" class="unstyled">
+			
+				<!-- No Bookmarks found -->
+				<div ng-hide="(Changed | filter:search).length">
+					&emsp;No changed bookmarks found.
+				</div>
+				<!-- end No Bookmarks found -->
+				<div ng-show="(Changed | filter:search).length">
+					<a href="#" ng-click="ClearChanged()">Clear All</a>
+				</div>
+				<hr>
+				<!-- Bookmark item -->
+				<li ng-repeat="item in Changed | filter:search">
+					
+					<div class="bookmark">
+					
+						<!-- Button Area -->
+						<div class="buttonsGroup">
+							<button title="Restore bookmark to previous version." 
+									class="btn btn-success btn-mini sideButton" 
+									ng-click="RestoreChanged($index)">
+										<i class="icon-long-arrow-left" alt="Restore Bookmark"></i> 
+							</button>
+						</div>
+						<!-- end Button Area -->
+						<!-- Text Area -->
+						<div class="textGroup">
+							Current
+							<!-- Title -->
+							<div class="title" ng-click="OpenBookmark(item)">
+								{{item.newObj.title}}
+							</div>
+							<!-- end Title -->
+							
+							<!-- Url -->
+							<div class="url" ng-click="OpenBookmark(item)">
+								{{item.newObj.url}}
+							</div>
+							<!-- end Url -->
+							Previous
+							<!-- Title -->
+							<div class="title" ng-click="OpenBookmark(item)">
+								{{item.oldObj.title}}
+							</div>
+							<!-- end Title -->
+							
+							<!-- Url -->
+							<div class="url" ng-click="OpenBookmark(item)">
+								{{item.oldObj.url}}
+							</div>
+							<!-- end Url -->
+							
+						</div>
+						<!-- end Text Area -->
+						<hr>
+					</div>
+					
+				</li>
+				<!-- end Bookmark item -->
+			</ul>
+			<!-- end CHANGED -->
+			
+			<!-- DELETED -->
+			<ul id="bookmarkList" ng-show="SelectedTab == 2" class="unstyled">
+			
+				<!-- No Bookmarks found -->
+				<div ng-hide="(Deleted | filter:search).length">
+					&emsp;No deleted bookmarks found.
+				</div>
+				<!-- end No Bookmarks found -->
+				<div ng-show="(Deleted | filter:search).length">
+					<a href="#" ng-click="ClearDeleted()">Clear All</a>
+				</div>
+				<hr>
+				<!-- Bookmark item -->
+				<li ng-repeat="item in Deleted | filter:search">
+					
+					<div class="bookmark">
+						<!-- Button Area -->
+						<div class="buttonsGroup">
+							<button title="Restore bookmark" 
+									class="btn btn-success btn-mini sideButton" 
+									ng-click="RestoreDeleted($index)">
+										<i class="icon-long-arrow-left" alt="Restore bookmark"></i> 
+							</button>
+						</div>
+						<!-- end Button Area -->
+					
+					
+						<!-- Text Area -->
+						<div class="textGroup">
+						
+							<!-- Title -->
+							<div class="title" ng-click="OpenBookmark(item)">
+								{{item.title}}
+							</div>
+							<!-- end Title -->
+							
+							<!-- Url -->
+							<div class="url" ng-click="OpenBookmark(item)">
+								{{item.url}}
+							</div>
+							<!-- end Url -->
+							
+						</div>
+						<!-- end Text Area -->
+						<hr>
+					</div>
+					
+				</li>
+				<!-- end Bookmark item -->
+			</ul>
+			<!-- end DELETED -->
+		</div>
+	</body>
+	<!-- end Content -->
+</html> 

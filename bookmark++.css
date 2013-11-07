@@ -1,0 +1,134 @@
+/*Gabriel Gheorghian & Natacha Gabbamonte*/
+		
+body 
+{
+	margin:0;
+	padding:0;
+}
+
+ul
+{
+	list-style-type: none;
+}
+
+li 
+{
+	margin:0 0 0 0;
+}
+
+li:hover 
+{
+	background-color:#F0F0F0
+}
+
+hr{
+	clear:both;
+	margin:0px;
+}
+
+/* IDS */
+
+#all 
+{
+	width:300px;
+	max-height:400px;
+	min-height:400px;
+	overflow-x: hidden;
+	overflow-y:auto;
+}
+
+#searchDiv
+{
+	width:283px;
+	position:fixed;
+	background-color:white;
+	padding-bottom:5px;
+}
+
+#tabsDiv
+{
+	width:267px;
+	margin:0 20px 5px 10px;
+}
+
+#search 
+{
+	width: 260px;
+	margin:5px 20px 5px 10px;
+}
+
+#bookmarkList
+{
+	margin-top:70px;
+}
+
+/* CLASSES */
+
+.bookmark
+{
+	width:100%;
+	margin: 0px;
+	padding-top:10px;
+}
+
+.bookmark:hover
+{
+	background-color:#F9F9F9;
+}
+
+.bookmark:hover .sideButton
+{
+	display:block;
+	float:left;
+	margin:3px 0 5px 10px;
+	clear:both;
+}
+
+.textGroup{
+	width: -moz-calc(100% - 40px);/* Firefox */
+    width: -webkit-calc(100% - 40px);/* WebKit */
+    width: -o-calc(100% - 40px);/* Opera */
+    width: calc(100% - 40px);/* Standard */
+	min-height:60px;
+	float:left;
+}
+
+.title
+{
+	width:100%;
+	margin: 0 10px 0px 10px;
+	clear:both;
+	word-wrap:break-word;
+	cursor:pointer;
+}
+
+.url
+{
+	width:100%;
+	margin: 3px 10px 5px 10px;
+	clear:both;
+	font-size:small;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	color:darkgray;
+	cursor:pointer;
+}
+
+.buttonsGroup
+{
+	width:40px;
+	float:left;
+}
+
+.sideButton
+{
+	display:none;
+}
+
+.tabs
+{
+	float:left;
+	width:86px;
+	margin-right:3px;
+}
